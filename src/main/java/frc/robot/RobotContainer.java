@@ -18,12 +18,21 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final DriveTrain _driveTrain;
+  private final Joystick _leftJoystick;
+  private final Joystick _rightJoystick;
+  private final TankDrive _tankDrive;
+}
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    _driveTrain = new DriveTrain();
+    _leftJoystick = new Joystick(Constants.USBOrder.Zero);
+    _rightJoystick = new Joystick(Constants.USBOrder.One);
+    _tankDrive = new TankDrive(_driveTrain, _leftJoystick, _rightJoystick);
+
+    _driveTrain.setDefaultCommand(_tankDrive);
+  }
     // Configure the button bindings
     configureButtonBindings();
   }
