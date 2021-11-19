@@ -5,10 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TicTacToe;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Screw;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,9 +26,22 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  private final Screw screw;
+  private final TicTacToe box;
+  private final TicTacToe bottom;
+  private final TicTacToe middle;
+  private final TicTacToe top;
+  private final Joystick joy;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the button bindings
+    joy = new Joystick(Constants.USBOrder.Zero);
+    screw = new Screw();
+    box = new TicTacToe(screw, Constants.ScrewConsts.boxPos);
+    bottom = new TicTacToe(screw, Constants.ScrewConsts.bottomPos);
+    middle = new TicTacToe(screw, Constants.ScrewConsts.middlePos);
+    top = new TicTacToe(screw, Constants.ScrewConsts.middlePos);
+
     configureButtonBindings();
   }
 
@@ -34,7 +51,17 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    JoystickButton boxButton = new JoystickButton(joy, 1);
+    JoystickButton bottomButton = new JoystickButton(joy, 2);
+    JoystickButton middleButton = new JoystickButton(joy, 3);
+    JoystickButton topButton = new JoystickButton(joy, 4);
+
+    boxButton.whenPressed(box);
+    bottomButton.whenPressed(bottom);
+    middleButton.whenPressed(middle);
+    topButton.whenPressed(top);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
