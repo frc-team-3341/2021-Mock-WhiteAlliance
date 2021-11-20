@@ -13,15 +13,40 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  
+  public static final class ScrewConsts{
+        public static final int screwPort = 10;
+        public final static double startPos = 0;
+        public final static double boxPos = 9;
+        public final static double bottomPos = 16;
+        public final static double middlePos = 24;
+        public final static double topPos = 32;
+  }
+  
+  public static final class pidConsts{
+        public static final double pidP = 0;
+        public static final double pidI = 0;
+        public static final double pidD = 0;
+  }
+  
+  public static final class charConsts{
+        public static final double ks = 0;
+        public static final double kg = 0;
+        public static final double kv = 0;
+  }
+  
+  public final static double threadLength = 0.125;
     public static final class DriveTrainPorts {
         public static final int LeftDriveTalonPort = 1;
         public static final int RightDriveTalonPort = 2;
-    } 
-    public static final class JoystickAxis {
+  } 
+  
+  public static final class JoystickAxis {
         public static final int YAxis = 1;
-    } 
-    public static final class USBOrder {
+  }
+  
+  public static final class USBOrder {
         public static final int Zero = 0;
         public static final int One = 1;
-    }
+  }
 }
