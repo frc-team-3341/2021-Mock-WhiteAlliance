@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.controller.ElevatorFeedforward;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,22 +17,28 @@ public class TicTacToe extends CommandBase {
   PIDController pid = new PIDController(Constants.pidConsts.pidP, Constants.pidConsts.pidI, Constants.pidConsts.pidD);
   private Screw screw;
   private double pos;
+  private Joystick joy;
+  private boolean teleOp;
 
-  public TicTacToe(Screw sc, double pos) {
+  public TicTacToe(Screw sc, double pos, Joystick joy, boolean TeleOp) {
     screw = sc;
-    this.pos = pos;
+    if(!TeleOp) this.pos = pos;
+    this.joy = joy;
+    this.teleOp = TeleOp;
+    addRequirements(screw);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pid.setSetpoint(pos);
+    if(!teleOp) pid.setSetpoint(pos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    screw.spin(pid.calculate(screw.getPosition()) + elevator.calculate(0));
+    if(teleOp) screw.spin(joy.getRawAxis(1)*-1);
+    else screw.spin(pid.calculate(screw.getPosition()) + elevator.calculate(0));
   }
 
   // Called once the command ends or is interrupted.
