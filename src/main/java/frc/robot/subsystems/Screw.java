@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -19,23 +19,28 @@ public class Screw extends SubsystemBase {
   public Screw() {
     _screwTalon = new WPI_TalonSRX(Constants.ScrewConsts.screwPort);
 
-    _screwTalon.configFactoryDefault();
+    //_screwTalon.configFactoryDefault();
     _screwTalon.setInverted(false);
-    _screwTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    //_screwTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
     _nutPos = Constants.ScrewConsts.startPos;
   }
+
 
   public void spin(double speed){
     _screwTalon.set(ControlMode.PercentOutput, speed);
   }
   
-  public double getPosition(){
-    return _screwTalon.getSelectedSensorPosition();
+  public double getPosition(){ 
+    return -1 * _screwTalon.getSelectedSensorPosition() * Constants.threadLength * Constants.gearBoxRatio / 4096.0;
+  }
+  public void setPosition(double pos){
+    _screwTalon.setSelectedSensorPosition(pos);
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Position", getPosition());
     // This method will be called once per scheduler run
   }
 }
