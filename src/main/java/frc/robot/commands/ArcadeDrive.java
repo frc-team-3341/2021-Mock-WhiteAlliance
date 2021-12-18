@@ -30,8 +30,8 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    _driveTrain.arcadeDrive(-0.8 * _joystick.getRawAxis(Constants.JoystickAxis.YAxis),
-                             _joystick.getRawAxis(Constants.JoystickAxis.XAxis));
+    _driveTrain.arcadeDrive(-0.5 * _joystick.getRawAxis(Constants.JoystickAxis.YAxis),
+                             0.5*_joystick.getRawAxis(Constants.JoystickAxis.XAxis));
   }
  
   // Called once the command ends or is interrupted.

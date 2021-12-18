@@ -79,6 +79,12 @@ public class RobotContainer {
     bottomButton.whenPressed(bottom);
     middleButton.whenPressed(middle);
     topButton.whenPressed(top);
+
+    zeroButton.whenReleased(teleOp);
+    boxButton.whenReleased(teleOp);
+    bottomButton.whenReleased(teleOp);
+    middleButton.whenReleased(teleOp);
+    topButton.whenReleased(teleOp);
   }
  
   /**

@@ -32,7 +32,7 @@ public class Screw extends SubsystemBase {
   }
   
   public double getPosition(){ 
-    return -1 * _screwTalon.getSelectedSensorPosition() * Constants.threadLength * Constants.gearBoxRatio / 4096.0;
+    return _screwTalon.getSelectedSensorPosition() * Constants.threadLength * Constants.gearBoxRatio / 4096.0;
   }
   public void setPosition(double pos){
     _screwTalon.setSelectedSensorPosition(pos);
